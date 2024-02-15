@@ -1,6 +1,6 @@
 using Catalyst
 using Distributions
-using AgentBasedCells
+using AgentBasedFSP
 using StatProfilerHTML
 using OrdinaryDiffEq
 using Roots

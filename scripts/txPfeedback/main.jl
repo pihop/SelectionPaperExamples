@@ -1,6 +1,6 @@
 using Catalyst
 using Distributions
-using AgentBasedCells
+using AgentBasedFSP
 using OrdinaryDiffEq
 using Roots
 solver_opts = (atol=1e-8, rtol=1e-8, stol=1e-4, method=Reinsert(), solver=TRBDF2(autodiff=false), rootfinder=Order2(), compute_joint=true)

@@ -4,7 +4,7 @@ using CSV
 using JLD2
 
 using Catalyst
-using AgentBasedCells
+using AgentBasedFSP
 using KernelDensity
 using Distributions
 using QuadGK
@@ -183,13 +183,13 @@ xs = 0.0:1.0:120.0
 transp = 0.4
 stairstransp = 0.4
 
-mγ_wt = AgentBasedCells.gen_division_rate_function(haz_wt(t)*itp_wt(Protein), paramrn)
+mγ_wt = AgentBasedFSP.gen_division_rate_function(haz_wt(t)*itp_wt(Protein), paramrn)
 marginalγ_wt = empirical_marginal_cycles_γ(mγ_wt, params_wt, fluors_wt; tslice=8)
 
-mγ_2pal = AgentBasedCells.gen_division_rate_function(haz_2pal(t)*itp_2pal(Protein), paramrn)
+mγ_2pal = AgentBasedFSP.gen_division_rate_function(haz_2pal(t)*itp_2pal(Protein), paramrn)
 marginalγ_2pal = empirical_marginal_cycles_γ(mγ_2pal, params_2pal, fluors_2pal; tslice=8)
 
-mγ_2palhaz = AgentBasedCells.gen_division_rate_function(haz_wt(t)*itp_2palwt(Protein), paramrn)
+mγ_2palhaz = AgentBasedFSP.gen_division_rate_function(haz_wt(t)*itp_2palwt(Protein), paramrn)
 marginalγ_2palhaz = empirical_marginal_cycles_γ(mγ_2palhaz, params_2palwt, fluors_2pal; tslice=8)
 
 integ_wt(t) = quadgk(marginalγ_wt, 0.0, t)[1]
@@ -258,8 +258,8 @@ mkpath("$(plotsdir())/growth-sos/")
 save("$(plotsdir())/growth-sos/selfuns.pdf", fig)
 
 
-mγ_wt = AgentBasedCells.gen_division_rate_function(haz_wt(t), paramrn)
-mγ_wtitp = AgentBasedCells.gen_division_rate_function(haz_wt(t)*itp_wt(t), paramrn)
+mγ_wt = AgentBasedFSP.gen_division_rate_function(haz_wt(t), paramrn)
+mγ_wtitp = AgentBasedFSP.gen_division_rate_function(haz_wt(t)*itp_wt(t), paramrn)
 #likelihood_hazard_pop(mγ_wt, params_wt, q0[1]; data=fluors₋Sm_test, inf=1e10, tslice=5, x0=x0) / length(fluors₋Sm_test)
 #likelihood_hazard_pop(mγ₋Sm_, params₋Sm, q0[1]; data=fluors₋Sm_test, inf=1e10, tslice=5, x0=x0) / length(fluors₋Sm_test)
 #likelihood_hazard_pop(mγ₋Sm, params₋Sm, q0[1]; data=fluors₋Sm_train, inf=1e10, tslice=5, x0=x0) / length(fluors₋Sm_train)
@@ -272,15 +272,15 @@ println("No spline")
 #-2*likelihood_hazard_pop(mγ₋Sm_, params₋Sm, q0[1]; data=fluors₋Sm_train, inf=1e10, tslice=5, x0=x0, offset=0.5)
 
 
-mγ_2pal = AgentBasedCells.gen_division_rate_function(haz_2pal(t), paramrn)
-mγ_2palitp = AgentBasedCells.gen_division_rate_function(haz_2pal(t)*itp_2pal(t), paramrn)
+mγ_2pal = AgentBasedFSP.gen_division_rate_function(haz_2pal(t), paramrn)
+mγ_2palitp = AgentBasedFSP.gen_division_rate_function(haz_2pal(t)*itp_2pal(t), paramrn)
 println("Spline")
 5*log(length(fluors_2pal)) - 2*likelihood_hazard_pop(mγ_2palitp, params_2pal, q0[1]; data=fluors_2pal, inf=1e10, tslice=5, x0=x0)
 println("No spline")
 -2*likelihood_hazard_pop(mγ_2pal, params_2pal, q0[1]; data=fluors_2pal, inf=1e10, tslice=5, x0=x0)
 
 
-#mγ₊Sm_ = AgentBasedCells.gen_division_rate_function(haz₊Sm(t), paramrn)
+#mγ₊Sm_ = AgentBasedFSP.gen_division_rate_function(haz₊Sm(t), paramrn)
 #likelihood_hazard_pop(mγ₊Sm, params₊Sm, q0[1]; data=fluors₊Sm_test, inf=1e10, tslice=5, x0=x0) / length(fluors₊Sm_test)
 #likelihood_hazard_pop(mγ₊Sm_, params₊Sm, q0[1]; data=fluors₊Sm_test, inf=1e10, tslice=5, x0=x0) / length(fluors₊Sm_test)
 #likelihood_hazard_pop(mγ₊Sm, params₊Sm, q0[1]; data=fluors₊Sm_train, inf=1e10, tslice=5, x0=x0) / length(fluors₊Sm_train)

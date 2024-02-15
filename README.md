@@ -2,7 +2,7 @@
 
 This repository provides the implementation of the models and parameter fitting.
 The stochastic simulation and the finite state projection algorithm for numerical results is maintained in a separate
-repository [AgentBasedCells](https://github.com/pihop/AgentBasedCells.jl) and added as a dependency here.
+repository [AgentBasedFSP](https://github.com/pihop/AgentBasedCells.jl) and added as a dependency here.
 
 This code base is using the Julia Language and [DrWatson](https://juliadynamics.github.io/DrWatson.jl/stable/).
 It is authored by Paul Piho.

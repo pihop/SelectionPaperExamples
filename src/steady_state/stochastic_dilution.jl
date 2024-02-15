@@ -2,7 +2,7 @@ using Catalyst
 using FiniteStateProjection
 using DifferentialEquations.EnsembleAnalysis
 using SparseArrays
-using AgentBasedCells
+using AgentBasedFSP
 using JumpProcesses
 using ImageFiltering
 
@@ -41,7 +41,7 @@ function birth_death_steady_state!(model::StochasticDilutionModel, truncation)
     rates = [r.rate for r in reacts]
     stoich = Catalyst.netstoichmat(model.rn)
 
-    ratef = AgentBasedCells.gen_division_rate_function.(rates, model.rn)
+    ratef = AgentBasedFSP.gen_division_rate_function.(rates, model.rn)
     eval_rates = [[f(state, model.ps, 0.0) for f in ratef] for state in 1:truncation[1]] 
     # currently evaluated for t = 0.0. Ok if rates are not time dependent.
     sumλ = sum.(map(x -> x[vec(stoich .== 1)], eval_rates))

@@ -1,6 +1,6 @@
 using ModelingToolkit
 using Catalyst
-using AgentBasedCells
+using AgentBasedFSP
 using OrdinaryDiffEq
 solver_settings = (atol=1e-6, rtol=1e-6, stol=1e-6, method=Reinsert(), solver=TRBDF2())
 using FiniteStateProjection
@@ -161,7 +161,7 @@ size_pt = 72 .* size_inches
 fig = Figure(size = size_pt, fontsize=18)
 xs = 0:1:150
 xs = collect(zip(ones(length(xs)), xs))
-sx = AgentBasedCells.gen_division_rate_function(hill, rn)
+sx = AgentBasedFSP.gen_division_rate_function(hill, rn)
 ax = Axis(fig[1,1], xlabel="Protein counts (x)", ylabel="Selection s(x)")
 
 lines!(ax, getindex.(xs, 2), sx.(xs, Ref(params), Ref(0.0)); color=colors[1], linewidth=3)

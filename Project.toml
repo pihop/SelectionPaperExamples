@@ -4,7 +4,7 @@ authors = ["Paul Piho"]
 [deps]
 AbstractMCMC = "80f14c24-f653-4e6a-9b94-39d6b0f70001"
 AdvancedMH = "5b7e9947-ddc0-4b3f-9b55-0d8042f74170"
-AgentBasedCells = "2dbd9f51-f436-409b-ba40-734378588e97"
+AgentBasedFSP = "2dbd9f51-f436-409b-ba40-734378588e97"
 Bootstrap = "e28b5b4c-05e8-5b66-bc03-6f0c0a0a06e0"
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"

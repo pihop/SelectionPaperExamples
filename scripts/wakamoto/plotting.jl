@@ -1,4 +1,4 @@
-using AgentBasedCells
+using AgentBasedFSP
 using OrdinaryDiffEq
 solver_opts = (stol=1e-4, atol=1e-6, rtol=1e-6, method=Reinsert(), solver=TRBDF2())
 using CairoMakie
@@ -29,8 +29,8 @@ model_bursty_naive = CellPopulationModel(
     bursty_rn, DivisionRateBounded(γτ₊Sm,1.0,bursty_rn), BinomialKernel(0.5))
 #model_bursty_hillfsrs = CellPopulationModel(bursty_rn, DivisionRateBounded(γτ₋Sm*hillfs*hillfr,1.0,bursty_rn), BinomialKernel(0.5))
 
-#sel_funhillfsrs = AgentBasedCells.gen_division_rate_function(hillfs*hillfr, bursty_rn)
-#sel_funhillfs = AgentBasedCells.gen_division_rate_function(hillfs, bursty_rn)
+#sel_funhillfsrs = AgentBasedFSP.gen_division_rate_function(hillfs*hillfr, bursty_rn)
+#sel_funhillfs = AgentBasedFSP.gen_division_rate_function(hillfs, bursty_rn)
 
 # With -Sm parameters (selection)
 #params_w₋Sm = [ps_bursty₋Sm..., 1.1837173382640955, 78.04605744215044, 0.6082567620480603, 20, 0, 0, 0, 0]

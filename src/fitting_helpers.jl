@@ -17,7 +17,7 @@ using ReverseDiff
 
 Turing.setadbackend(:forwarddiff)
 
-using AgentBasedCellss
+using AgentBasedFSPs
 #using Bootstrap
 #using OnlineStats
 
@@ -348,7 +348,7 @@ function likelihood_hazard_pop(γ::Function, θ, q; data, inf, tslice, x0, offse
 end
 
 function growth_rate(hazard, θ, paramrn; data, tslice, offset=0.5)
-    γ = AgentBasedCellss.gen_division_rate_function(hazard, paramrn)
+    γ = AgentBasedFSPs.gen_division_rate_function(hazard, paramrn)
     
     vals = [] 
     tss = []
@@ -456,7 +456,7 @@ function fit_spline(hazard, paramrn;
     end
 
     nparams = length(pbounds)
-    γ = AgentBasedCellss.gen_division_rate_function(hazard, paramrn)
+    γ = AgentBasedFSPs.gen_division_rate_function(hazard, paramrn)
     lik(p, q) = -likelihood(γ, pyconvert.(Float64, p), q; 
         data=data, inf=inf, tslice=tslice, x0=x0)
 
@@ -491,7 +491,7 @@ function fit_spline(hazard, paramrn;
 end
 
 function fit_spline_mcmc(hazard, paramrn; priorσ, sampler, data, likelihood, name, strain, tslice, x0=nothing, nsamples)
-    γ = AgentBasedCellss.gen_division_rate_function(hazard, paramrn)
+    γ = AgentBasedFSPs.gen_division_rate_function(hazard, paramrn)
     loglik(p) = likelihood(γ, p, 0.0; data=data, inf=-Inf, tslice=tslice, x0=nothing)
 
     @model function model()
