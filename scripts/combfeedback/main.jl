@@ -1,6 +1,6 @@
 using Catalyst
 using Distributions
-using AgentBasedCells
+using AgentBasedFSP
 using OrdinaryDiffEq
 using Roots
 using FastGaussQuadrature

@@ -5,7 +5,7 @@ using JLD2
 using MLJ
 
 using Catalyst
-using AgentBasedCells
+using AgentBasedFSP
 using KernelDensity
 using Distributions
 using QuadGK
@@ -192,7 +192,7 @@ params_hillfs = [1.3771485956602671, 78.24118123524796, 0.1039282608597518, 10]
 @parameters L K δ n 
 hillfs = L*((1-δ)*Protein^n / (K^n + Protein^n) + δ)
 @named hillfsparamrn = ReactionSystem([], t, [Protein], [L, K, δ, n])
-sel_hillfs = AgentBasedCells.gen_division_rate_function(hillfs, hillfsparamrn)
+sel_hillfs = AgentBasedFSP.gen_division_rate_function(hillfs, hillfsparamrn)
 
 fig = Figure()
 #ax_marginal = Axis(fig[1,1]; title="Marginal interdivision time", xlabel="Time", ylabel="Probability density")
@@ -201,8 +201,8 @@ ax_sel = Axis(fig[1,1]; xlabel="Protein numbers", ylabel="Selection strength")
 
 xs = 50.0:1.0:170.0
 
-#mγ₋Sm = AgentBasedCells.gen_division_rate_function(haz₋Sm(t), paramrn)
-mγ₋Sm = AgentBasedCells.gen_division_rate_function(haz₋Sm(t) * itp₋Sm(Protein), paramrn)
+#mγ₋Sm = AgentBasedFSP.gen_division_rate_function(haz₋Sm(t), paramrn)
+mγ₋Sm = AgentBasedFSP.gen_division_rate_function(haz₋Sm(t) * itp₋Sm(Protein), paramrn)
 marginalγ₋Sm = empirical_marginal_cycles_γ(mγ₋Sm, params₋Sm, fluors₋Sm; tslice=5)
 integ₋Sm(t) = quadgk(marginalγ₋Sm, 0.0, t)[1]
 λ₋Sm = growth_rate(haz₋Sm(t)* itp₋Sm(Protein), params₋Sm, paramrn; data=fluors₋Sm, tslice=5, offset=0.0)
@@ -210,13 +210,13 @@ integ₋Sm(t) = quadgk(marginalγ₋Sm, 0.0, t)[1]
 pd₋Sm(t) = 2*exp(-λ₋Sm*t)*marginalγ₋Sm(t) * exp(-integ₋Sm(t))
 #pd₋Sm(t) = marginalγ₋Sm(t) * exp(-integ₋Sm(t))
 
-mγ₊Sm = AgentBasedCells.gen_division_rate_function(haz₊Sm(t) * itp₊Sm(Protein), paramrn)
+mγ₊Sm = AgentBasedFSP.gen_division_rate_function(haz₊Sm(t) * itp₊Sm(Protein), paramrn)
 marginalγ₊Sm = empirical_marginal_cycles_γ(mγ₊Sm, params₊Sm, fluors₊Sm; tslice=5)
 integ₊Sm(t) = quadgk(marginalγ₊Sm, 0.0, t)[1]
 λ₊Sm = growth_rate(haz₊Sm(t) * itp₊Sm(Protein), params₊Sm, paramrn; data=fluors₊Sm, tslice=5, offset=0.0)
 pd₊Sm(t) = 2*exp(-λ₊Sm*t)*marginalγ₊Sm(t) * exp(-integ₊Sm(t))
 
-mγ₊Sm₋Sm = AgentBasedCells.gen_division_rate_function(haz₋Sm(t) * itp₊Sm₋Sm(Protein), paramrn)
+mγ₊Sm₋Sm = AgentBasedFSP.gen_division_rate_function(haz₋Sm(t) * itp₊Sm₋Sm(Protein), paramrn)
 marginalγ₊Sm₋Sm = empirical_marginal_cycles_γ(mγ₊Sm₋Sm, params₊Sm₋Sm, fluors₊Sm; tslice=5)
 integ₊Sm₋Sm(t) = quadgk(marginalγ₊Sm₋Sm, 0.0, t)[1]
 λ₊Sm₋Sm = growth_rate(haz₋Sm(t) * itp₊Sm₋Sm(Protein), params₊Sm₋Sm, paramrn; data=fluors₊Sm, tslice=5, offset=0.0)
@@ -323,13 +323,13 @@ save("$(plotsdir())/wakamoto/selfuns.pdf", fig)
 #lines!(ax2, ts, pdf(interdiv_dist₋Sm.kde, ts))
 #save("$(plotsdir())/wakamoto/ages.pdf", fig)
 
-#mγ₋Sm_ = AgentBasedCells.gen_division_rate_function(haz₋Sm(t), paramrn)
+#mγ₋Sm_ = AgentBasedFSP.gen_division_rate_function(haz₋Sm(t), paramrn)
 #likelihood_hazard_pop(mγ₋Sm, params₋Sm, q0[1]; data=fluors₋Sm_test, inf=1e10, tslice=5, x0=x0) / length(fluors₋Sm_test)
 #likelihood_hazard_pop(mγ₋Sm_, params₋Sm, q0[1]; data=fluors₋Sm_test, inf=1e10, tslice=5, x0=x0) / length(fluors₋Sm_test)
 #likelihood_hazard_pop(mγ₋Sm, params₋Sm, q0[1]; data=fluors₋Sm_train, inf=1e10, tslice=5, x0=x0) / length(fluors₋Sm_train)
 #likelihood_hazard_pop(mγ₋Sm_, params₋Sm, q0[1]; data=fluors₋Sm_train, inf=1e10, tslice=5, x0=x0) / length(fluors₋Sm_train)
 
-#mγ₋Sm_ = AgentBasedCells.gen_division_rate_function(haz₋Sm(t), paramrn)
+#mγ₋Sm_ = AgentBasedFSP.gen_division_rate_function(haz₋Sm(t), paramrn)
 #println("Spline")
 #5*log(length(fluors₋Sm_test)) - 2*likelihood_hazard_pop(mγ₋Sm, params₋Sm, q0[1]; data=fluors₋Sm_test, inf=1e10, tslice=5, x0=x0, offset=0.5)
 #5*log(length(fluors₋Sm_train)) - 2*likelihood_hazard_pop(mγ₋Sm, params₋Sm, q0[1]; data=fluors₋Sm_train, inf=1e10, tslice=5, x0=x0, offset=0.5)
@@ -337,25 +337,25 @@ save("$(plotsdir())/wakamoto/selfuns.pdf", fig)
 #-2*likelihood_hazard_pop(mγ₋Sm_, params₋Sm, q0[1]; data=fluors₋Sm_test, inf=1e10, tslice=5, x0=x0, offset=0.5)
 #-2*likelihood_hazard_pop(mγ₋Sm_, params₋Sm, q0[1]; data=fluors₋Sm_train, inf=1e10, tslice=5, x0=x0, offset=0.5)
 
-#mγ₊Sm_ = AgentBasedCells.gen_division_rate_function(haz₊Sm(t), paramrn)
+#mγ₊Sm_ = AgentBasedFSP.gen_division_rate_function(haz₊Sm(t), paramrn)
 #likelihood_hazard_pop(mγ₊Sm, params₊Sm, q0[1]; data=fluors₊Sm_test, inf=1e10, tslice=5, x0=x0) / length(fluors₊Sm_test)
 #likelihood_hazard_pop(mγ₊Sm_, params₊Sm, q0[1]; data=fluors₊Sm_test, inf=1e10, tslice=5, x0=x0) / length(fluors₊Sm_test)
 #likelihood_hazard_pop(mγ₊Sm, params₊Sm, q0[1]; data=fluors₊Sm_train, inf=1e10, tslice=5, x0=x0) / length(fluors₊Sm_train)
 #likelihood_hazard_pop(mγ₊Sm_, params₊Sm, q0[1]; data=fluors₊Sm_train, inf=1e10, tslice=5, x0=x0) / length(fluors₊Sm_train)
 
-#mγ₊Sm_ = AgentBasedCells.gen_division_rate_function(haz₊Sm(t), paramrn)
+#mγ₊Sm_ = AgentBasedFSP.gen_division_rate_function(haz₊Sm(t), paramrn)
 #5*log(length(fluors₊sm_test)) - 2*likelihood_hazard_pop(mγ₊sm, params₊sm, q0[1]; data=fluors₊sm_test, inf=1e10, tslice=5, x0=x0 )
 #5*log(length(fluors₊sm_train)) - 2*likelihood_hazard_pop(mγ₊sm, params₊sm, q0[1]; data=fluors₊sm_train, inf=1e10, tslice=5, x0=x0)
 #-2*likelihood_hazard_pop(mγ₊sm_, params₊sm, q0[1]; data=fluors₊sm_test, inf=1e10, tslice=5, x0=x0)
 #-2*likelihood_hazard_pop(mγ₊sm_, params₊sm, q0[1]; data=fluors₊sm_train, inf=1e10, tslice=5, x0=x0)
 #
 
-mγ₋Sm_ = AgentBasedCells.gen_division_rate_function(haz₋Sm(t), paramrn)
+mγ₋Sm_ = AgentBasedFSP.gen_division_rate_function(haz₋Sm(t), paramrn)
 3*log(length(fluors₋Sm)) - 2*likelihood_hazard_pop(mγ₋Sm, params₋Sm, q0[1]; data=fluors₋Sm, inf=1e10, tslice=5, x0=x0)
 -2*likelihood_hazard_pop(mγ₋Sm_, params₋Sm, q0[1]; data=fluors₋Sm, inf=1e10, tslice=5, x0=x0)
 
 
-mγ₊Sm_ = AgentBasedCells.gen_division_rate_function(haz₊Sm(t), paramrn)
+mγ₊Sm_ = AgentBasedFSP.gen_division_rate_function(haz₊Sm(t), paramrn)
 3*log(length(fluors₊Sm)) - 2*likelihood_hazard_pop(mγ₊Sm, params₊Sm, q0[1]; data=fluors₊Sm, inf=1e10, tslice=5, x0=x0)
 -2*likelihood_hazard_pop(mγ₊Sm_, params₊Sm, q0[1]; data=fluors₊Sm, inf=1e10, tslice=5, x0=x0)
 

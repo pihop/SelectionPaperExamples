@@ -2,7 +2,7 @@
 
 julia_version = "1.10.0"
 manifest_format = "2.0"
-project_hash = "8ed2da1421962a8e5e78ea82516dd2a583bc716a"
+project_hash = "73901bf3c21795b99babbd0dd8a478bb25416cf9"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "41c37aa88889c171f1300ceac1313c06e891d245"
@@ -89,11 +89,11 @@ weakdeps = ["DiffResults", "ForwardDiff", "MCMCChains", "StructArrays"]
     AdvancedMHMCMCChainsExt = "MCMCChains"
     AdvancedMHStructArraysExt = "StructArrays"
 
-[[deps.AgentBasedCells]]
+[[deps.AgentBasedFSP]]
 deps = ["ArraysOfArrays", "Catalyst", "Cuba", "Cubature", "DiffEqBase", "DiffEqCallbacks", "Distances", "Distributions", "FastGaussQuadrature", "FiniteStateProjection", "FunctionWrappers", "Integrals", "JumpProcesses", "LinearAlgebra", "LoopVectorization", "ModelingToolkit", "OrdinaryDiffEq", "PaddedViews", "PreallocationTools", "ProgressMeter", "QuadGK", "RecursiveArrayTools", "Roots", "RuntimeGeneratedFunctions", "SciMLBase", "SparseArrays", "StaticArrays", "StochasticDiffEq", "Sundials", "SymbolicUtils", "Symbolics"]
-git-tree-sha1 = "9c6fa6e5153856e654a2bca83b519008e21acb7c"
+git-tree-sha1 = "1550faf41cc2d803a6bd7c90496780b64737222a"
 repo-rev = "main"
-repo-url = "https://github.com/pihop/AgentBasedCells.jl"
+repo-url = "https://github.com/pihop/AgentBasedFSP.jl"
 uuid = "2dbd9f51-f436-409b-ba40-734378588e97"
 version = "0.1.0"
 

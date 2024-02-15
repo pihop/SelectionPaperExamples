@@ -4,7 +4,7 @@ using CSV
 using JLD2
 
 using Catalyst
-using AgentBasedCells
+using AgentBasedFSP
 using KernelDensity
 using Distributions
 using QuadGK
@@ -118,4 +118,4 @@ knots₊Sm = range(quant₊Sm[1], stop=quant₊Sm[2], length=nknots)
 itpp_spline₊Sm = Interp(x0, knots₊Sm)
 Symbolics.@register_symbolic (itpp_spline₊Sm::Interp)(x, p1, p2, p3, p4, p5)
 
-sel_funhillfs = AgentBasedCells.gen_division_rate_function(hillfs, bursty_rn)
+sel_funhillfs = AgentBasedFSP.gen_division_rate_function(hillfs, bursty_rn)

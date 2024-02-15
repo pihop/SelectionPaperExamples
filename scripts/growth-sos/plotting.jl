@@ -1,4 +1,4 @@
-using AgentBasedCells
+using AgentBasedFSP
 using OrdinaryDiffEq
 solver_opts = (stol=1e-4, atol=1e-6, rtol=1e-6, method=Reinsert(), solver=TRBDF2())
 
@@ -17,7 +17,7 @@ params_wt = pyconvert.(Float64, bopt_wt.x)
 bopt_2palsel = skopt.load("data/sim/checkpoint_sos_2palsel.pkl")
 params_2palsel = pyconvert.(Float64, bopt_2palsel.x)
 
-sel_funhillfs = AgentBasedCells.gen_division_rate_function(hillfs, bursty_rn)
+sel_funhillfs = AgentBasedFSP.gen_division_rate_function(hillfs, bursty_rn)
 
 model_wt = MotherCellModel(bursty_rn, DivisionRateBounded(γτ_wt, 1.0, bursty_rn), BinomialKernel(0.5))
 analyticals_wt = run_analytical_single(model_wt, experiment_setup(model_parameters=(params_wt..., 0.0, 0.0, 0.0, 0.0), trn=working_trn); solver_opts...)

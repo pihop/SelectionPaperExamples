@@ -4,7 +4,7 @@ using CSV
 using JLD2
 
 using Catalyst
-using AgentBasedCells
+using AgentBasedFSP
 using KernelDensity
 using Distributions
 using QuadGK

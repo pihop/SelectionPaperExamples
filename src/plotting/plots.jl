@@ -1,4 +1,4 @@
-using AgentBasedCells
+using AgentBasedFSP
 using CairoMakie
 import CairoMakie: Axis
 using StatsBase

@@ -1,5 +1,5 @@
 using Catalyst
-using AgentBasedCells
+using AgentBasedFSP
 using FastGaussQuadrature
 using OrdinaryDiffEq
 using Roots

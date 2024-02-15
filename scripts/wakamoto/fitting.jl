@@ -1,4 +1,4 @@
-using AgentBasedCells
+using AgentBasedFSP
 using OrdinaryDiffEq
 solver_opts = (stol=1e-3, atol=1e-6, rtol=1e-6, method=Reinsert(), solver=TRBDF2(autodiff=false))
 using Distributions
