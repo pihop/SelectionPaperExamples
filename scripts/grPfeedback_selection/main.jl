@@ -4,12 +4,12 @@ using AgentBasedFSP
 using StatProfilerHTML
 using OrdinaryDiffEq
 using Roots
-solver_opts = (atol=1e-6, rtol=1e-6, stol=1e-4, method=Reinsert(), solver=TRBDF2(), rootfinder=Order16(), compute_joint=true)
+solver_opts = (atol=1e-6, rtol=1e-6, stol=1e-4, method=Reinsert(), solver=TRBDF2(autodiff=false), rootfinder=Order16(), compute_joint=true)
 
 # Import reusable scripts. 
-include("$(srcdir())/plotting/plots.jl")
 include("$(srcdir())/steady_state/stochastic_dilution.jl")
-#include("$(srcdir())/steady_state/.jl")
+include("$(srcdir())/steady_state/effective_dilution.jl")
+include("$(srcdir())/plotting/plots.jl")
 
 # Register the parameters and variables used.
 @parameters t K Ω λ k k0
@@ -84,11 +84,11 @@ marginal_size_distribution!.(analyticals_gr_mother; atol=1e-6, rtol=1e-6)
 
 # Dilution models
 sdilution_gr_models = 
-    [StochasticDilutionModel(effective_dilution_rn, exp.init, exp.ps) for exp in experiment_suite]
+    [StochasticDilutionModel(effective_dilution_rn, exp.init, exp.analytical_tspan, exp.ps) for exp in experiment_suite]
 birth_death_steady_state!.(sdilution_gr_models, experiment_suite[1].truncation)
 
 edilution_gr_model = EffectiveDilutionModel(effective_dilution_rn, 1)
-root_finding(edilution_gr_model, experiment_suite[1].ps, δspan_dense; search_interval = Interval(0.0, 500.0))
+root_finding(edilution_gr_model, experiment_suite[1].ps, δspan_dense; search_interval = IntervalBox(Interval(0.0,500.0), 1))
 
 analyticals_gr_pop = run_analytical(model_pop, experiment_suite; solver_opts...)
 compute_joint!.(analyticals_gr_pop)
@@ -123,7 +123,8 @@ plot_comparison(
     acolors=[1,4],
     nlins=[10,10],
     trtlimx=(0.0, 100.0),
-    trtlimy=(0.0, 30.0)
+    trtlimy=(0.0, 30.0),
+    sidx=1
     )
 
 plot_comparison_extras([analyticals_gr_pop, analyticals_gr_mother],
@@ -146,7 +147,6 @@ plot_comparison_extras([analyticals_gr_pop, analyticals_gr_mother],
     tridgelims=[0.2, 3.0],
     acolors=[1,4]
     )
-
 
 initn = [1.0, 20.0]
 experiment_suite_mother_init = [

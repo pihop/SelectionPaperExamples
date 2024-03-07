@@ -1,6 +1,6 @@
 using DataFrames
 using CSV
-using GLMakie
+#using GLMakie
 using Glob
 using StatsBase
 using Colors
@@ -106,8 +106,8 @@ size_pt = 72 .* size_inches
 fig = Figure(resolution=size_pt, fontsize=18)
 
 ax_mdfluor = Axis(fig[1,1]; xlabel="Mother cell fluorescence", ylabel="Daugther cell \n fluorescence")
-ax_mdfluor2 = Axis(fig[1,2]; xlabel="Mother cell fluorescence", ylabel="Daugther cell \n fluorescence")
-#ax_divtime = Axis(fig[1,2]; xlabel="Division time", ylabel="Probability density")
+#ax_mdfluor2 = Axis(fig[1,2]; xlabel="Mother cell fluorescence", ylabel="Daugther cell \n fluorescence")
+ax_divtime = Axis(fig[1,2]; xlabel="Division time", ylabel="Probability density")
 ax_var = Axis(fig[2,1:2]; xlabel="Mother cell fluorescence", ylabel="Variance of daughter \n cell fluorescence")
 ax_birth = Axis(fig[3,1]; xlabel="Protein fluorescence", ylabel="Probability density", title="Birth fluorescence")
 ax_div = Axis(fig[3,2]; xlabel="Protein fluorescence", ylabel="Probability density", title="Division fluorescence")
@@ -126,14 +126,14 @@ ax_divn = Axis(fig[4,2]; xlabel="Protein numbers", ylabel="Probability density",
 
 scatter!(ax_mdfluor, getindex.(md_fluor_wt, 1), getindex.(md_fluor_wt, 2); 
     color=(colors[1], transp), strokewidth=1.0, strokecolor = (colors[1], 0.9), label="Wild type")
-scatter!(ax_mdfluor2, getindex.(md_fluor_2pal, 1), getindex.(md_fluor_2pal, 2); 
+scatter!(ax_mdfluor, getindex.(md_fluor_2pal, 1), getindex.(md_fluor_2pal, 2); 
     color=(colors[2], transp), strokewidth=1.0, strokecolor = (colors[2], 0.9), label="2pal")
 str_line(x) = 0.5*x
 lines!(ax_mdfluor, 0.0:0.1:20.0, str_line.(0.0:0.1:20.0); color=(:gray, 0.8), linewidth=3.0)
-lines!(ax_mdfluor2, 0.0:0.1:20.0, str_line.(0.0:0.1:20.0); color=(:gray, 0.8), linewidth=3.0)
+#lines!(ax_mdfluor2, 0.0:0.1:20.0, str_line.(0.0:0.1:20.0); color=(:gray, 0.8), linewidth=3.0)
 xlims!(ax_mdfluor, (0, 10))
-xlims!(ax_mdfluor2, (0, 10))
-ylims!(ax_mdfluor2, (0, 10))
+#xlims!(ax_mdfluor2, (0, 10))
+#ylims!(ax_mdfluor2, (0, 10))
 ylims!(ax_mdfluor, (0, 5))
 
 scatter!(ax_var, df_wt[!,:X], df_wt[!,:Z]; color=colors[1])
@@ -198,7 +198,7 @@ CairoMakie.activate!()
 mkpath("$(plotsdir())/growth-sos")
 save("$(plotsdir())/growth-sos/cf.pdf", fig)
 
-GLMakie.activate!()
+#GLMakie.activate!()
 size_inches = (16.2, 11.2)
 size_pt = 72 .* size_inches
 figure_hitting = Figure(resolution=size_pt, fontsize=34, figure_padding=(2, 65, 2, 2))

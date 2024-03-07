@@ -9,7 +9,7 @@ using PythonCall
 @py import skopt: callbacks
 @py import skopt.callbacks: CheckpointSaver
 @py import skopt
-@py import dragonfly: minimise_function
+#@py import dragonfly: minimise_function
 
 using LinearAlgebra
 

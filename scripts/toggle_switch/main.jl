@@ -28,7 +28,6 @@ using IntervalArithmetic
 
 include("$(srcdir())/steady_state/stochastic_dilution.jl")
 include("$(srcdir())/steady_state/effective_dilution.jl")
-
 include("$(srcdir())/plotting/plots.jl")
 
 @variables t 
