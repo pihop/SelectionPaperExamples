@@ -1,8 +1,8 @@
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.0"
+julia_version = "1.10.2"
 manifest_format = "2.0"
-project_hash = "73901bf3c21795b99babbd0dd8a478bb25416cf9"
+project_hash = "6484658fd544bdfe28ac85bd7801aeab8b686fa2"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "41c37aa88889c171f1300ceac1313c06e891d245"
@@ -91,7 +91,7 @@ weakdeps = ["DiffResults", "ForwardDiff", "MCMCChains", "StructArrays"]
 
 [[deps.AgentBasedFSP]]
 deps = ["ArraysOfArrays", "Catalyst", "Cuba", "Cubature", "DiffEqBase", "DiffEqCallbacks", "Distances", "Distributions", "FastGaussQuadrature", "FiniteStateProjection", "FunctionWrappers", "Integrals", "JumpProcesses", "LinearAlgebra", "LoopVectorization", "ModelingToolkit", "OrdinaryDiffEq", "PaddedViews", "PreallocationTools", "ProgressMeter", "QuadGK", "RecursiveArrayTools", "Roots", "RuntimeGeneratedFunctions", "SciMLBase", "SparseArrays", "StaticArrays", "StochasticDiffEq", "Sundials", "SymbolicUtils", "Symbolics"]
-git-tree-sha1 = "1550faf41cc2d803a6bd7c90496780b64737222a"
+git-tree-sha1 = "eb7650a908c4698a661b316b664815397f74d6f8"
 repo-rev = "main"
 repo-url = "https://github.com/pihop/AgentBasedFSP.jl"
 uuid = "2dbd9f51-f436-409b-ba40-734378588e97"
@@ -459,7 +459,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.0.5+1"
+version = "1.1.0+0"
 
 [[deps.CompositeTypes]]
 git-tree-sha1 = "02d2316b7ffceff992f3096ae48c7829a8aa0638"
@@ -2118,7 +2118,7 @@ version = "1.6.1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.23+2"
+version = "0.3.23+4"
 
 [[deps.OpenEXR]]
 deps = ["Colors", "FileIO", "OpenEXR_jll"]

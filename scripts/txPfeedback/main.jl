@@ -5,6 +5,8 @@ using OrdinaryDiffEq
 using Roots
 solver_opts = (atol=1e-8, rtol=1e-8, stol=1e-4, method=Reinsert(), solver=TRBDF2(autodiff=false), rootfinder=Order2(), compute_joint=true)
 
+include("$(srcdir())/steady_state/effective_dilution.jl")
+include("$(srcdir())/steady_state/stochastic_dilution.jl")
 include("$(srcdir())/plotting/plots.jl")
 plot_options = (bins=10000, normalization=:pdf, strokewidth=0.0, x_gap=0.0, dodge_gap=0.0)
 
@@ -79,7 +81,7 @@ division_dist_ancest!.(analyticals_mother)
 
 # Dilution models
 sdilution_models = 
-    [StochasticDilutionModel(effective_dilution_rn, exp.init, exp.ps) for exp in experiment_suite]
+    [StochasticDilutionModel(effective_dilution_rn, exp.init, exp.analytical_tspan, exp.ps) for exp in experiment_suite]
 birth_death_steady_state!.(sdilution_models, experiment_suite[1].truncation)
 
 edilution_model = EffectiveDilutionModel(effective_dilution_rn, 1)
