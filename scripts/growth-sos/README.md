@@ -1,0 +1,4 @@
+-- get_data.sh downloads the data used in the fittings and deposits it to where the data.jl script expects it. 
+-- data.jl processes the data. 
+-- fitting.jl performs the Bayesian optimisations.  
+-- plotting.jl plots the results. 
