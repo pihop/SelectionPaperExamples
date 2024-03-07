@@ -8,16 +8,16 @@ using AdvancedMH
 using Serialization
 using MCMCChains
 using LogDensityProblems
-using Turing
-using LoopVectorization
+using AgentBasedFSP
+#using Turing
+#using LoopVectorization
 using QuadGK
-using Zygote
+#using Zygote
 using ForwardDiff
-using ReverseDiff
+#using ReverseDiff
 
-Turing.setadbackend(:forwarddiff)
+#Turing.setadbackend(:forwarddiff)
 
-using AgentBasedFSPs
 #using Bootstrap
 #using OnlineStats
 
@@ -171,6 +171,7 @@ function optimise_parameters(model;
 
     res = nothing
 
+    mkpath("data/sim")
     for n in 1:restarts
         println("Epoch $n out of $restarts")
         checkpoint_saver = CheckpointSaver("data/sim/checkpoint_$(strain)_$name.pkl", store_objective=false)
@@ -456,7 +457,7 @@ function fit_spline(hazard, paramrn;
     end
 
     nparams = length(pbounds)
-    γ = AgentBasedFSPs.gen_division_rate_function(hazard, paramrn)
+    γ = AgentBasedFSP.gen_division_rate_function(hazard, paramrn)
     lik(p, q) = -likelihood(γ, pyconvert.(Float64, p), q; 
         data=data, inf=inf, tslice=tslice, x0=x0)
 
@@ -490,24 +491,24 @@ function fit_spline(hazard, paramrn;
     return opt
 end
 
-function fit_spline_mcmc(hazard, paramrn; priorσ, sampler, data, likelihood, name, strain, tslice, x0=nothing, nsamples)
-    γ = AgentBasedFSPs.gen_division_rate_function(hazard, paramrn)
-    loglik(p) = likelihood(γ, p, 0.0; data=data, inf=-Inf, tslice=tslice, x0=nothing)
-
-    @model function model()
-        prior ~ MvNormal(x0, priorσ)
-        logl = loglik(prior)
-        Turing.@addlogprob!(logl)
-        return logl
-    end
-
-    model = model()
-
-    opt = sample(model, sampler, nsamples; chain_type=Chains)
-    serialize("data/sim/chainfile_$(strain)_$(name)_$(nsamples).jls", opt)
-    println("Saved the chain at data/sim/chainfile_$(strain)_$(name)_$(nsamples).jls")
-    return opt
-end
+#function fit_spline_mcmc(hazard, paramrn; priorσ, sampler, data, likelihood, name, strain, tslice, x0=nothing, nsamples)
+#    γ = AgentBasedFSP.gen_division_rate_function(hazard, paramrn)
+#    loglik(p) = likelihood(γ, p, 0.0; data=data, inf=-Inf, tslice=tslice, x0=nothing)
+#
+#    @model function model()
+#        prior ~ MvNormal(x0, priorσ)
+#        logl = loglik(prior)
+#        Turing.@addlogprob!(logl)
+#        return logl
+#    end
+#
+#    model = model()
+#
+#    opt = sample(model, sampler, nsamples; chain_type=Chains)
+#    serialize("data/sim/chainfile_$(strain)_$(name)_$(nsamples).jls", opt)
+#    println("Saved the chain at data/sim/chainfile_$(strain)_$(name)_$(nsamples).jls")
+#    return opt
+#end
 
 function std_range(data, nstd::Float64; length::Int64=5) 
     # range containing nstd to either side of the mean
