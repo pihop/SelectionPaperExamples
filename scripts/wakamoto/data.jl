@@ -9,7 +9,7 @@ using Bootstrap
 #using DensityRatioEstimation 
 
 using ColorSchemes
-using GLMakie
+#using GLMakie
 using CairoMakie
 using Colors
 using JLD2
@@ -162,6 +162,7 @@ data_legend = [PolyElement(color=colors[1]), PolyElement(color=(colors[2]))]
 Legend(fig[5,1:2], data_legend, ["No treatment", "Treatment"]; orientation=:horizontal, framevisible=false, tellwidth=false, tellheight=true)
 
 CairoMakie.activate!()
+mkpath("$(plotsdir())/wakamoto/")
 save("$(plotsdir())/wakamoto/cf_$strain.pdf", fig)
 
 

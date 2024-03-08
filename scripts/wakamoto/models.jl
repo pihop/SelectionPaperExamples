@@ -8,8 +8,8 @@ using AgentBasedFSP
 using KernelDensity
 using Distributions
 using QuadGK
-using DataInterpolations
-using MLJ
+#using DataInterpolations
+#using MLJ
 
 using StatProfilerHTML
 
@@ -74,12 +74,12 @@ filter!(row -> 1 < row.Column1 < 50 && row.Column3 < working_trn - 1, df_div₋S
 cycles₋Sm = rmnothing(vcat(make_cell_cycle.(lineages₋Sm)...));
 fluors₋Sm = fluorescence_trajectory.(cycles₋Sm) ./ cf₋Sm
 filter!(x -> 1 < length(x) < 50 && x[end] < working_trn - 1, fluors₋Sm)
-fluors₋Sm_train, fluors₋Sm_test = partition(fluors₋Sm, 0.7; shuffle=true)
+#fluors₋Sm_train, fluors₋Sm_test = partition(fluors₋Sm, 0.7; shuffle=true)
 
 cycles₊Sm = rmnothing(vcat(make_cell_cycle.(lineages₊Sm)...));
 fluors₊Sm = fluorescence_trajectory.(cycles₊Sm) ./ cf₋Sm
 filter!(x -> 1 < length(x) < 50 && x[end] < working_trn - 1, fluors₊Sm)
-fluors₊Sm_train, fluors₊Sm_test = partition(fluors₊Sm, 0.7; shuffle=true)
+#fluors₊Sm_train, fluors₊Sm_test = partition(fluors₊Sm, 0.7; shuffle=true)
 
 interdiv_times₋Sm = df_div₋Sm[!, :Column1] .- 0.5 
 interdiv_times₊Sm = df_div₊Sm[!, :Column1] .- 0.5
